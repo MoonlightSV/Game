@@ -51,7 +51,7 @@ demY = False
 
 
 def drawWindow():
-    global animCount
+    # global animCount
 
     # win.blit(bg, (0, 0))
     win.fill((0, 0, 0))
@@ -99,13 +99,17 @@ while run:
         elif keys[pygame.K_DOWN] and y < 500 - height - 5:
             y += speed
 
-    if keys[pygame.K_PAGEUP]:
+    if keys[pygame.K_RCTRL]:
         if demX:
             demX = False
             demY = True
         else:
             demX = True
             demY = False
+            if height > width:
+                width, height = height, width
+            while x < 500 - width - 5:
+                x += 1
     # else:
         # left = False
         # right = False
@@ -116,11 +120,18 @@ while run:
             isJump = True
     else:
         if jumpCount >= -10:
-            if jumpCount < 0:
-                y += (jumpCount ** 2) / 4
+            if demX:
+                if jumpCount < 0:
+                    y += (jumpCount ** 2) / 4
+                else:
+                    y -= (jumpCount ** 2) / 4
+                jumpCount -= 1
             else:
-                y -= (jumpCount ** 2) / 4
-            jumpCount -= 1
+                if jumpCount < 0:
+                    x += (jumpCount ** 2) / 4
+                else:
+                    x -= (jumpCount ** 2) / 4
+                jumpCount -= 1
         else:
             isJump = False
             jumpCount = 10
