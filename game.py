@@ -82,6 +82,20 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RCTRL:
+                if demX:
+                    demX = False
+                    demY = True
+                    width, height = height, width
+                    while x < 500 - width - 5:
+                        x += 1
+                else:
+                    demX = True
+                    demY = False
+                    width, height = height, width
+                    while y < 500 - height - 5:
+                        y += 1
 
     keys = pygame.key.get_pressed()
     if demX:
@@ -99,17 +113,7 @@ while run:
         elif keys[pygame.K_DOWN] and y < 500 - height - 5:
             y += speed
 
-    if keys[pygame.K_RCTRL]:
-        if demX:
-            demX = False
-            demY = True
-        else:
-            demX = True
-            demY = False
-            if height > width:
-                width, height = height, width
-            while x < 500 - width - 5:
-                x += 1
+
     # else:
         # left = False
         # right = False
